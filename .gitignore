@@ -221,3 +221,18 @@ secrets.py
 # Google Colab
 .config/
 drive/
+
+# Datos - no subir datasets
+data/
+*.csv
+*.xlsx
+*.json
+*.zip
+*.tar.gz
+
+# Modelos entrenados
+*.h5
+*.pkl
+*.joblib
+*.pt
+*.pth
