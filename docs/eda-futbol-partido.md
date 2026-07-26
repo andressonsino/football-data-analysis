@@ -60,14 +60,14 @@ TEMPORADA       = '2026'          # ← reemplazar
 
 ```python
 # Carga del dataset limpio
-df = pd.read_csv('data/clean/NOMBRE_ARCHIVO_clean.csv')  # ← reemplazar
-print(f'Dataset cargado: {df.shape[0]} jugadores x {df.shape[1]} columnas')
+df_clean = pd.read_csv('data/clean/NOMBRE_ARCHIVO_clean.csv')  # ← reemplazar
+print(f'Dataset cargado: {df_clean.shape[0]} jugadores x {df_clean.shape[1]} columnas')
 ```
 
 ```python
 # Separar por equipo si el dataset tiene los dos juntos
-df_local     = df[df['Equipo'] == EQUIPO_LOCAL].copy()     # ← reemplazar columna si es distinta
-df_visitante = df[df['Equipo'] == EQUIPO_VISITANTE].copy()
+df_local     = df_clean[df_clean['Equipo'] == EQUIPO_LOCAL].copy()     # ← reemplazar columna si es distinta
+df_visitante = df_clean[df_clean['Equipo'] == EQUIPO_VISITANTE].copy()
 
 print(f'{EQUIPO_LOCAL}: {len(df_local)} jugadores')
 print(f'{EQUIPO_VISITANTE}: {len(df_visitante)} jugadores')
@@ -75,7 +75,7 @@ print(f'{EQUIPO_VISITANTE}: {len(df_visitante)} jugadores')
 
 ```python
 # Filtrar solo jugadores que participaron (más de 0 minutos)
-df_activos = df[df['Minutos'] > 0].copy()
+df_activos = df_clean[df_clean['Minutos'] > 0].copy()
 print(f'Jugadores con minutos jugados: {len(df_activos)}')
 ```
 
@@ -86,25 +86,25 @@ print(f'Jugadores con minutos jugados: {len(df_activos)}')
 **Ejecutar siempre antes de cualquier análisis.**
 
 ```python
-df.info()
+df_clean.info()
 ```
 
 ```python
-display(df.describe())
+display(df_clean.describe())
 ```
 
 ```python
 # Nulos por columna
 nulos = pd.DataFrame({
-    'Nulos': df.isnull().sum(),
-    'Porcentaje': (df.isnull().sum() / len(df) * 100).round(2)
+    'Nulos': df_clean.isnull().sum(),
+    'Porcentaje': (df_clean.isnull().sum() / len(df_clean) * 100).round(2)
 })
 display(nulos[nulos['Nulos'] > 0])
 ```
 
 ```python
 # Distribución de minutos jugados — entender quiénes participaron
-print(df['Minutos'].value_counts().sort_index(ascending=False))
+print(df_clean['Minutos'].value_counts().sort_index(ascending=False))
 ```
 
 ---
