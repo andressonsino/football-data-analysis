@@ -60,7 +60,7 @@ TEMPORADA       = '2026'          # ← reemplazar
 
 ```python
 # Carga del dataset limpio
-df_clean = pd.read_csv('data/clean/NOMBRE_ARCHIVO_clean.csv')  # ← reemplazar
+df_clean = pd.read_csv('../data/clean/NOMBRE_ARCHIVO_clean.csv')  # ← reemplazar
 print(f'Dataset cargado: {df_clean.shape[0]} jugadores x {df_clean.shape[1]} columnas')
 ```
 
@@ -135,7 +135,7 @@ for container in p.containers:
 plt.title(f'Top 10 por tiros totales — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
-plt.savefig('outputs/top_tiros.png', dpi=150, bbox_inches='tight')
+plt.savefig('../outputs/top_tiros.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -166,7 +166,7 @@ plt.title(f'Efectividad de tiro (% al arco) — {EQUIPO_LOCAL} vs {EQUIPO_VISITA
 plt.ylabel('Tiros al arco (%)')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
-plt.savefig('outputs/efectividad_tiro.png', dpi=150, bbox_inches='tight')
+plt.savefig('../outputs/efectividad_tiro.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -196,7 +196,7 @@ else:
     plt.title(f'Contribuciones ofensivas (G+A) — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
     plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
-    plt.savefig('outputs/contribucion_ofensiva.png', dpi=150, bbox_inches='tight')
+    plt.savefig('../outputs/contribucion_ofensiva.png', dpi=150, bbox_inches='tight')
     plt.show()
 ```
 
@@ -232,7 +232,7 @@ for container in p.containers:
 plt.title(f'Top 10 acciones defensivas — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
-plt.savefig('outputs/acciones_defensivas.png', dpi=150, bbox_inches='tight')
+plt.savefig('../outputs/acciones_defensivas.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -261,7 +261,7 @@ sns.barplot(
 plt.title(f'Acciones defensivas por posición — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=30, ha='right')
 plt.tight_layout()
-plt.savefig('outputs/defensiva_por_posicion.png', dpi=150, bbox_inches='tight')
+plt.savefig('../outputs/defensiva_por_posicion.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -288,7 +288,7 @@ plt.axvline(90, color='black', linestyle='--', alpha=0.7, label='Tiempo reglamen
 plt.title(f'Minutos jugados por jugador — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.legend()
 plt.tight_layout()
-plt.savefig('outputs/minutos_jugados.png', dpi=150, bbox_inches='tight')
+plt.savefig('../outputs/minutos_jugados.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -365,7 +365,7 @@ axes[1].tick_params(axis='x', rotation=30)
 
 plt.suptitle(f'Aporte por posición — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}', fontsize=14)
 plt.tight_layout()
-plt.savefig('outputs/aporte_por_posicion.png', dpi=150, bbox_inches='tight')
+plt.savefig('../outputs/aporte_por_posicion.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -403,7 +403,7 @@ sns.barplot(
 plt.title(f'Faltas cometidas vs recibidas — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
-plt.savefig('outputs/disciplina.png', dpi=150, bbox_inches='tight')
+plt.savefig('../outputs/disciplina.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -514,7 +514,7 @@ sns.barplot(
 plt.title(f'Comparación de métricas — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
-plt.savefig('outputs/comparacion_equipos.png', dpi=150, bbox_inches='tight')
+plt.savefig('../outputs/comparacion_equipos.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
