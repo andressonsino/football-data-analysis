@@ -46,6 +46,10 @@ POSICIONES_ES = {
     'LW':   'Extremo izquierdo',
     'RW':   'Extremo derecho',
     'AM':   'Mediocampista ofensivo',
+    'FWMF': 'Delantero/Mediocampista',
+    'MFFW': 'Mediocampista/Delantero',
+    'DFMF': 'Defensor/Mediocampista',
+    'MFDF': 'Mediocampista/Defensor'
 }
 
 
