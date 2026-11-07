@@ -61,10 +61,17 @@ Sin resolver esto, las columnas quedan como tuplas ilegibles:
 ```python
 import pandas as pd
 import glob
+import os
 
 # ── Configuración ──────────────────────────────────────────
 DATA_PATH_LOCAL = r"ruta/a/tu/carpeta/raw/"  # ← CAMBIAR: ruta donde están los .xls
 # ───────────────────────────────────────────────────────────
+
+# Rutas de salida — se crean automáticamente
+OUTPUT_PATH = '../outputs'
+CLEAN_PATH  = '../data/clean'
+os.makedirs(OUTPUT_PATH, exist_ok=True)
+os.makedirs(CLEAN_PATH, exist_ok=True)
 
 # 1. Buscar todos los archivos .xls en la carpeta
 archivos = glob.glob(DATA_PATH_LOCAL + "*.xls")

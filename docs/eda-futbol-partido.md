@@ -32,6 +32,7 @@
 ```python
 import pandas as pd
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import seaborn as sns
@@ -52,6 +53,12 @@ plt.rcParams['axes.labelsize'] = 11
 EQUIPO_LOCAL    = 'Huracán'       # ← reemplazar
 EQUIPO_VISITANTE = 'Banfield'     # ← reemplazar
 TEMPORADA       = '2026'          # ← reemplazar
+
+# Rutas de salida — se crean automáticamente
+OUTPUT_PATH = '../outputs'
+CLEAN_PATH  = '../data/clean'
+os.makedirs(OUTPUT_PATH, exist_ok=True)
+os.makedirs(CLEAN_PATH, exist_ok=True)
 ```
 
 ---
