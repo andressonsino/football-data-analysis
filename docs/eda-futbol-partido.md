@@ -54,9 +54,21 @@ EQUIPO_LOCAL    = 'Huracán'       # ← reemplazar
 EQUIPO_VISITANTE = 'Banfield'     # ← reemplazar
 TEMPORADA       = '2026'          # ← reemplazar
 
-# Rutas de salida — se crean automáticamente
-OUTPUT_PATH = '../outputs'
-CLEAN_PATH  = '../data/clean'
+from pathlib import Path
+
+# Rutas de salida — detectan automáticamente la raíz del proyecto (funciona desde notebooks/, raíz en VS Code o Colab)
+_cwd = Path.cwd()
+if _cwd.name == 'notebooks':
+    BASE_PATH = _cwd.parent
+elif (_cwd / 'data').exists() or (_cwd / 'notebooks').exists() or (_cwd / 'src').exists():
+    BASE_PATH = _cwd
+elif (_cwd.parent / 'data').exists() or (_cwd.parent / 'notebooks').exists():
+    BASE_PATH = _cwd.parent
+else:
+    BASE_PATH = _cwd
+
+OUTPUT_PATH = str(BASE_PATH / 'outputs')
+CLEAN_PATH  = str(BASE_PATH / 'data' / 'clean')
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 os.makedirs(CLEAN_PATH, exist_ok=True)
 ```
@@ -67,7 +79,7 @@ os.makedirs(CLEAN_PATH, exist_ok=True)
 
 ```python
 # Carga del dataset limpio
-df_clean = pd.read_csv('../data/clean/NOMBRE_ARCHIVO_clean.csv')  # ← reemplazar
+df_clean = pd.read_csv(os.path.join(CLEAN_PATH, 'NOMBRE_ARCHIVO_clean.csv'))  # ← reemplazar
 print(f'Dataset cargado: {df_clean.shape[0]} jugadores x {df_clean.shape[1]} columnas')
 ```
 
@@ -142,7 +154,8 @@ for container in p.containers:
 plt.title(f'Top 10 por tiros totales — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
-plt.savefig('../outputs/top_tiros.png', dpi=150, bbox_inches='tight')
+os.makedirs(OUTPUT_PATH, exist_ok=True)
+plt.savefig(os.path.join(OUTPUT_PATH, 'top_tiros.png'), dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -173,7 +186,8 @@ plt.title(f'Efectividad de tiro (% al arco) — {EQUIPO_LOCAL} vs {EQUIPO_VISITA
 plt.ylabel('Tiros al arco (%)')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
-plt.savefig('../outputs/efectividad_tiro.png', dpi=150, bbox_inches='tight')
+os.makedirs(OUTPUT_PATH, exist_ok=True)
+plt.savefig(os.path.join(OUTPUT_PATH, 'efectividad_tiro.png'), dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -203,7 +217,8 @@ else:
     plt.title(f'Contribuciones ofensivas (G+A) — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
     plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
-    plt.savefig('../outputs/contribucion_ofensiva.png', dpi=150, bbox_inches='tight')
+    os.makedirs(OUTPUT_PATH, exist_ok=True)
+    plt.savefig(os.path.join(OUTPUT_PATH, 'contribucion_ofensiva.png'), dpi=150, bbox_inches='tight')
     plt.show()
 ```
 
@@ -239,7 +254,8 @@ for container in p.containers:
 plt.title(f'Top 10 acciones defensivas — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
-plt.savefig('../outputs/acciones_defensivas.png', dpi=150, bbox_inches='tight')
+os.makedirs(OUTPUT_PATH, exist_ok=True)
+plt.savefig(os.path.join(OUTPUT_PATH, 'acciones_defensivas.png'), dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -268,7 +284,8 @@ sns.barplot(
 plt.title(f'Acciones defensivas por posición — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=30, ha='right')
 plt.tight_layout()
-plt.savefig('../outputs/defensiva_por_posicion.png', dpi=150, bbox_inches='tight')
+os.makedirs(OUTPUT_PATH, exist_ok=True)
+plt.savefig(os.path.join(OUTPUT_PATH, 'defensiva_por_posicion.png'), dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -295,7 +312,8 @@ plt.axvline(90, color='black', linestyle='--', alpha=0.7, label='Tiempo reglamen
 plt.title(f'Minutos jugados por jugador — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.legend()
 plt.tight_layout()
-plt.savefig('../outputs/minutos_jugados.png', dpi=150, bbox_inches='tight')
+os.makedirs(OUTPUT_PATH, exist_ok=True)
+plt.savefig(os.path.join(OUTPUT_PATH, 'minutos_jugados.png'), dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -372,7 +390,8 @@ axes[1].tick_params(axis='x', rotation=30)
 
 plt.suptitle(f'Aporte por posición — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}', fontsize=14)
 plt.tight_layout()
-plt.savefig('../outputs/aporte_por_posicion.png', dpi=150, bbox_inches='tight')
+os.makedirs(OUTPUT_PATH, exist_ok=True)
+plt.savefig(os.path.join(OUTPUT_PATH, 'aporte_por_posicion.png'), dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -410,7 +429,8 @@ sns.barplot(
 plt.title(f'Faltas cometidas vs recibidas — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
-plt.savefig('../outputs/disciplina.png', dpi=150, bbox_inches='tight')
+os.makedirs(OUTPUT_PATH, exist_ok=True)
+plt.savefig(os.path.join(OUTPUT_PATH, 'disciplina.png'), dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
@@ -521,7 +541,8 @@ sns.barplot(
 plt.title(f'Comparación de métricas — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
-plt.savefig('../outputs/comparacion_equipos.png', dpi=150, bbox_inches='tight')
+os.makedirs(OUTPUT_PATH, exist_ok=True)
+plt.savefig(os.path.join(OUTPUT_PATH, 'comparacion_equipos.png'), dpi=150, bbox_inches='tight')
 plt.show()
 ```
 

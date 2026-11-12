@@ -65,11 +65,25 @@ HEADERS = {
     "Accept-Language": "es-AR,es;q=0.9",
 }
 
-# Rutas de salida — se crean automáticamente
-OUTPUT_PATH = '../outputs'
-CLEAN_PATH  = '../data/clean'
+from pathlib import Path
+
+# Rutas de salida — detectan automáticamente la raíz del proyecto (funciona desde notebooks/, raíz en VS Code o Colab)
+_cwd = Path.cwd()
+if _cwd.name == 'notebooks':
+    BASE_PATH = _cwd.parent
+elif (_cwd / 'data').exists() or (_cwd / 'notebooks').exists() or (_cwd / 'src').exists():
+    BASE_PATH = _cwd
+elif (_cwd.parent / 'data').exists() or (_cwd.parent / 'notebooks').exists():
+    BASE_PATH = _cwd.parent
+else:
+    BASE_PATH = _cwd
+
+OUTPUT_PATH = str(BASE_PATH / 'outputs')
+CLEAN_PATH  = str(BASE_PATH / 'data' / 'clean')
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 os.makedirs(CLEAN_PATH, exist_ok=True)
+LIVE_PATH   = str(BASE_PATH / 'data' / 'live')
+os.makedirs(LIVE_PATH, exist_ok=True)
 
 print("Configuración lista")
 ```
@@ -220,18 +234,19 @@ display(df_stats)
 ### 4.4 Guardar snapshot por momento del partido
 
 ```python
-def guardar_snapshot(df: pd.DataFrame, momento: str, carpeta: str = 'data/live') -> str:
+def guardar_snapshot(df: pd.DataFrame, momento: str, carpeta: str = None) -> str:
     """
     Guarda un snapshot de las estadísticas en un momento específico del partido.
 
     Parámetros:
         momento : descripción del momento ('descanso', 'min60', 'final', etc.)
     """
+    carpeta = carpeta or globals().get('LIVE_PATH', '../data/live')
     os.makedirs(carpeta, exist_ok=True)
     timestamp = datetime.now().strftime('%Y%m%d_%H%M')
     nombre = f"{EQUIPO_LOCAL.lower().replace(' ', '_')}_vs_"  \
              f"{EQUIPO_VISITANTE.lower().replace(' ', '_')}_{momento}_{timestamp}.csv"
-    ruta = f"{carpeta}/{nombre}"
+    ruta = os.path.join(carpeta, nombre)
     df.to_csv(ruta, index=False)
     print(f"Snapshot guardado: {ruta}")
     return ruta
@@ -506,12 +521,14 @@ def grafico_comparacion(df_resumen: pd.DataFrame, titulo: str = None) -> None:
     ax.set_xlabel('')
     ax.xaxis.set_visible(False)
     plt.tight_layout()
-    plt.savefig('outputs/comparacion_stats.png', dpi=150, bbox_inches='tight')
+    carpeta_salida = globals().get('OUTPUT_PATH', '../outputs')
+    os.makedirs(carpeta_salida, exist_ok=True)
+    ruta_img = os.path.join(carpeta_salida, 'comparacion_stats.png')
+    plt.savefig(ruta_img, dpi=150, bbox_inches='tight')
     plt.show()
-    print("Guardado en outputs/comparacion_stats.png")
+    print(f"Guardado en {ruta_img}")
 
 # Uso
-os.makedirs('outputs', exist_ok=True)
 grafico_comparacion(df_resumen, titulo=f'{EQUIPO_LOCAL} vs {EQUIPO_VISITANTE} — Estadísticas')
 ```
 
@@ -553,7 +570,9 @@ def grafico_xg_timeline(df_incidentes: pd.DataFrame) -> None:
     ax.set_title(f'Timeline de goles — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
     ax.legend()
     plt.tight_layout()
-    plt.savefig('outputs/timeline_goles.png', dpi=150, bbox_inches='tight')
+    carpeta_salida = globals().get('OUTPUT_PATH', '../outputs')
+    os.makedirs(carpeta_salida, exist_ok=True)
+    plt.savefig(os.path.join(carpeta_salida, 'timeline_goles.png'), dpi=150, bbox_inches='tight')
     plt.show()
 ```
 

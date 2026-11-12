@@ -409,11 +409,12 @@ visualizar_comparacion(
 ### 8.1 Radar de perfil de jugador
 
 ```python
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 
 def radar_jugador(df_jugadores: pd.DataFrame, nombre: str, 
-                  metricas: list, titulo: str = None) -> None:
+                  metricas: list, titulo: str = None, output_path: str = None) -> None:
     """
     Genera un radar chart para un jugador.
     Los valores deben estar normalizados (percentil 0-100).
@@ -439,6 +440,9 @@ def radar_jugador(df_jugadores: pd.DataFrame, nombre: str,
     ax.set_yticks([25, 50, 75, 100])
     ax.set_yticklabels(['P25', 'P50', 'P75', 'P100'], size=8)
     ax.set_title(titulo or nombre, size=14, pad=20)
+    carpeta_salida = output_path or globals().get('OUTPUT_PATH', '../outputs')
+    os.makedirs(carpeta_salida, exist_ok=True)
+    plt.savefig(os.path.join(carpeta_salida, f"radar_{nombre.lower().replace(' ', '_')}.png"), dpi=150, bbox_inches='tight')
     plt.show()
 ```
 

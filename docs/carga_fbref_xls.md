@@ -67,9 +67,24 @@ import os
 DATA_PATH_LOCAL = r"ruta/a/tu/carpeta/raw/"  # ← CAMBIAR: ruta donde están los .xls
 # ───────────────────────────────────────────────────────────
 
-# Rutas de salida — se crean automáticamente
-OUTPUT_PATH = '../outputs'
-CLEAN_PATH  = '../data/clean'
+from pathlib import Path
+
+# Rutas de salida — detectan automáticamente la raíz del proyecto (notebooks/, raíz en VS Code o Colab)
+_p_data = Path(DATA_PATH)
+_cwd = Path.cwd()
+if _p_data.exists():
+    BASE_PATH = _p_data.parent.parent.parent if _p_data.parent.name in ('raw', 'clean', 'processed') else (_p_data.parent.parent if _p_data.parent.name == 'data' else _cwd)
+elif _cwd.name == 'notebooks':
+    BASE_PATH = _cwd.parent
+elif (_cwd / 'data').exists() or (_cwd / 'notebooks').exists() or (_cwd / 'src').exists():
+    BASE_PATH = _cwd
+elif (_cwd.parent / 'data').exists() or (_cwd.parent / 'notebooks').exists():
+    BASE_PATH = _cwd.parent
+else:
+    BASE_PATH = _cwd
+
+OUTPUT_PATH = str(BASE_PATH / 'outputs')
+CLEAN_PATH  = str(BASE_PATH / 'data' / 'clean')
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 os.makedirs(CLEAN_PATH, exist_ok=True)
 
