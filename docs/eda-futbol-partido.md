@@ -140,7 +140,7 @@ df_ofensivo = df_activos[['Jugador', 'Posición', 'Minutos',
 
 df_ofensivo = df_ofensivo.sort_values('Tiros totales', ascending=False)
 
-plt.figure(figsize=(12, 6))
+fig = plt.figure(figsize=(12, 6))
 p = sns.barplot(
     data=df_ofensivo.head(10),
     x='Jugador',
@@ -153,7 +153,8 @@ for container in p.containers:
     p.bar_label(container, label_type='edge', padding=3)
 plt.title(f'Top 10 por tiros totales — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=45, ha='right')
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0.03, 1, 1])
+fig.text(0.99, 0.008, '@hilosdeandres', ha='right', va='bottom', fontsize=10, color='dimgray', alpha=0.7)
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 plt.savefig(os.path.join(OUTPUT_PATH, 'top_tiros.png'), dpi=150, bbox_inches='tight')
 plt.show()
@@ -171,7 +172,7 @@ df_tiros['efectividad_tiro'] = (
 
 df_tiros = df_tiros.sort_values('efectividad_tiro', ascending=False)
 
-plt.figure(figsize=(12, 6))
+fig = plt.figure(figsize=(12, 6))
 p = sns.barplot(
     data=df_tiros,
     x='Jugador',
@@ -185,7 +186,8 @@ for container in p.containers:
 plt.title(f'Efectividad de tiro (% al arco) — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.ylabel('Tiros al arco (%)')
 plt.xticks(rotation=45, ha='right')
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0.03, 1, 1])
+fig.text(0.99, 0.008, '@hilosdeandres', ha='right', va='bottom', fontsize=10, color='dimgray', alpha=0.7)
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 plt.savefig(os.path.join(OUTPUT_PATH, 'efectividad_tiro.png'), dpi=150, bbox_inches='tight')
 plt.show()
@@ -203,7 +205,7 @@ df_contrib = df_activos[df_activos['contribucion_ofensiva'] > 0].sort_values(
 if len(df_contrib) == 0:
     print("Sin goles ni asistencias en este partido")
 else:
-    plt.figure(figsize=(10, 5))
+    fig = plt.figure(figsize=(10, 5))
     p = sns.barplot(
         data=df_contrib,
         x='Jugador',
@@ -216,7 +218,8 @@ else:
         p.bar_label(container, label_type='edge', padding=3)
     plt.title(f'Contribuciones ofensivas (G+A) — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
     plt.xticks(rotation=45, ha='right')
-    plt.tight_layout()
+    plt.tight_layout(rect=[0, 0.03, 1, 1])
+    fig.text(0.99, 0.008, '@hilosdeandres', ha='right', va='bottom', fontsize=10, color='dimgray', alpha=0.7)
     os.makedirs(OUTPUT_PATH, exist_ok=True)
     plt.savefig(os.path.join(OUTPUT_PATH, 'contribucion_ofensiva.png'), dpi=150, bbox_inches='tight')
     plt.show()
@@ -240,7 +243,7 @@ df_def = df_activos[['Jugador', 'Posición', 'Minutos',
     'acciones_defensivas', ascending=False
 )
 
-plt.figure(figsize=(12, 6))
+fig = plt.figure(figsize=(12, 6))
 p = sns.barplot(
     data=df_def.head(10),
     x='Jugador',
@@ -253,7 +256,8 @@ for container in p.containers:
     p.bar_label(container, label_type='edge', padding=3)
 plt.title(f'Top 10 acciones defensivas — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=45, ha='right')
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0.03, 1, 1])
+fig.text(0.99, 0.008, '@hilosdeandres', ha='right', va='bottom', fontsize=10, color='dimgray', alpha=0.7)
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 plt.savefig(os.path.join(OUTPUT_PATH, 'acciones_defensivas.png'), dpi=150, bbox_inches='tight')
 plt.show()
@@ -273,7 +277,7 @@ df_def_pos_melt = df_def_pos.melt(
     value_name='Total'
 )
 
-plt.figure(figsize=(12, 6))
+fig = plt.figure(figsize=(12, 6))
 sns.barplot(
     data=df_def_pos_melt,
     x='Posición',
@@ -283,7 +287,8 @@ sns.barplot(
 )
 plt.title(f'Acciones defensivas por posición — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=30, ha='right')
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0.03, 1, 1])
+fig.text(0.99, 0.008, '@hilosdeandres', ha='right', va='bottom', fontsize=10, color='dimgray', alpha=0.7)
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 plt.savefig(os.path.join(OUTPUT_PATH, 'defensiva_por_posicion.png'), dpi=150, bbox_inches='tight')
 plt.show()
@@ -298,7 +303,7 @@ plt.show()
 ```python
 df_min = df_activos.sort_values('Minutos', ascending=True)
 
-plt.figure(figsize=(10, 8))
+fig = plt.figure(figsize=(10, 8))
 p = sns.barplot(
     data=df_min,
     x='Minutos',
@@ -311,7 +316,8 @@ plt.axvline(45, color='gray', linestyle='--', alpha=0.7, label='Entretiempo')
 plt.axvline(90, color='black', linestyle='--', alpha=0.7, label='Tiempo reglamentario')
 plt.title(f'Minutos jugados por jugador — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.legend()
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0.03, 1, 1])
+fig.text(0.99, 0.008, '@hilosdeandres', ha='right', va='bottom', fontsize=10, color='dimgray', alpha=0.7)
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 plt.savefig(os.path.join(OUTPUT_PATH, 'minutos_jugados.png'), dpi=150, bbox_inches='tight')
 plt.show()
@@ -389,7 +395,8 @@ axes[1].set_xlabel('')
 axes[1].tick_params(axis='x', rotation=30)
 
 plt.suptitle(f'Aporte por posición — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}', fontsize=14)
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0.03, 1, 1])
+fig.text(0.99, 0.008, '@hilosdeandres', ha='right', va='bottom', fontsize=10, color='dimgray', alpha=0.7)
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 plt.savefig(os.path.join(OUTPUT_PATH, 'aporte_por_posicion.png'), dpi=150, bbox_inches='tight')
 plt.show()
@@ -418,7 +425,7 @@ df_disc_melt = df_disciplina[['Jugador', 'Faltas cometidas', 'Faltas recibidas']
     value_name='Faltas'
 )
 
-plt.figure(figsize=(12, 6))
+fig = plt.figure(figsize=(12, 6))
 sns.barplot(
     data=df_disc_melt,
     x='Jugador',
@@ -428,7 +435,8 @@ sns.barplot(
 )
 plt.title(f'Faltas cometidas vs recibidas — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=45, ha='right')
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0.03, 1, 1])
+fig.text(0.99, 0.008, '@hilosdeandres', ha='right', va='bottom', fontsize=10, color='dimgray', alpha=0.7)
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 plt.savefig(os.path.join(OUTPUT_PATH, 'disciplina.png'), dpi=150, bbox_inches='tight')
 plt.show()
@@ -530,7 +538,7 @@ df_comp_melt = df_comparacion.reset_index().melt(
 metricas_con_datos = df_comparacion[df_comparacion.sum(axis=1) > 0].index.tolist()
 df_comp_filtrado = df_comp_melt[df_comp_melt['Métrica'].isin(metricas_con_datos)]
 
-plt.figure(figsize=(14, 7))
+fig = plt.figure(figsize=(14, 7))
 sns.barplot(
     data=df_comp_filtrado,
     x='Métrica',
@@ -540,7 +548,8 @@ sns.barplot(
 )
 plt.title(f'Comparación de métricas — {EQUIPO_LOCAL} vs {EQUIPO_VISITANTE}')
 plt.xticks(rotation=45, ha='right')
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0.03, 1, 1])
+fig.text(0.99, 0.008, '@hilosdeandres', ha='right', va='bottom', fontsize=10, color='dimgray', alpha=0.7)
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 plt.savefig(os.path.join(OUTPUT_PATH, 'comparacion_equipos.png'), dpi=150, bbox_inches='tight')
 plt.show()

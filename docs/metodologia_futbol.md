@@ -440,6 +440,8 @@ def radar_jugador(df_jugadores: pd.DataFrame, nombre: str,
     ax.set_yticks([25, 50, 75, 100])
     ax.set_yticklabels(['P25', 'P50', 'P75', 'P100'], size=8)
     ax.set_title(titulo or nombre, size=14, pad=20)
+    plt.tight_layout(rect=[0, 0.03, 1, 1])
+    fig.text(0.99, 0.008, '@hilosdeandres', ha='right', va='bottom', fontsize=10, color='dimgray', alpha=0.7)
     carpeta_salida = output_path or globals().get('OUTPUT_PATH', '../outputs')
     os.makedirs(carpeta_salida, exist_ok=True)
     plt.savefig(os.path.join(carpeta_salida, f"radar_{nombre.lower().replace(' ', '_')}.png"), dpi=150, bbox_inches='tight')
